@@ -63,7 +63,7 @@ class App extends Component {
   }
   makeColor(c, i) {
     let shade = {
-      'backgroundColor': c,
+      'backgroundColor': colors[c],
       width: '80px',
       'minWidth': '80px',
       margin: 15,

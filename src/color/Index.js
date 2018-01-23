@@ -5,9 +5,9 @@ const css = {
   container: {
     width: '100%',
     height: '100%',
-    textAlign: 'center'
   },
   input: {
+    textAlign: 'center',
     width: '40%',
     'minWidth': '100px',
     'marginTop': '10%',
@@ -68,6 +68,12 @@ class App extends Component {
       'flexDirection': 'row'
     }
     let c = colorjs(state.color)
+    let header = {
+      color: 'darkgrey',
+      textAlign: 'left',
+      margin: '10px',
+      borderBottom: '2px solid ' + c
+    }
     let methods = [
       'complementaryScheme',
       'splitComplementaryScheme',
@@ -88,9 +94,24 @@ class App extends Component {
       'neutralScheme',
       'analogousScheme',
     ]
-    let suites = methods.map((fn, i) => {
+    let schemes = methods.map((fn, i) => {
       return (<div style={suite} key={i}>
         {this.showList(c[fn]())}
+      </div>
+      )
+    })
+    let changes = [
+      'darkenByRatio',
+      'lightenByRatio',
+      'devalueByRatio',
+      'valueByRatio',
+      'desaturateByRatio',
+      'saturateByRatio',
+    ]
+    changes = changes.map((fn, i) => {
+      let list = [c[fn](0), c[fn](0.25), c[fn](0.5), c[fn](0.75), c[fn](1)]
+      return (<div style={suite} key={i}>
+        {this.showList(list)}
       </div>
       )
     })
@@ -98,7 +119,10 @@ class App extends Component {
       <div style={css.container}>
         <input style={css.input} value={state.color} onChange={this.onType}  />
         <div style={main}/>
-        {suites}
+        <span style={header}>changes:</span>
+        {changes}
+        <span style={header}>matches:</span>
+        {schemes}
       </div>
       );
   }
